@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'AuthenticationController@home')->name('home');
+Route::get('/', 'ViewController@home')->name('home');

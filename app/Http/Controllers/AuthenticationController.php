@@ -10,6 +10,12 @@ use App\User;
 
 class AuthenticationController extends Controller
 {
+
+    public function isConnected() {
+        return response()->json([
+            "success" => "pong"
+        ]);
+    }
     
     /**
      * createAccount

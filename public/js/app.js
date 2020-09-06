@@ -65792,7 +65792,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  */
 
 
-__webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
+__webpack_require__(/*! ./components/Container */ "./resources/js/components/Container.js");
 
 /***/ }),
 
@@ -65841,10 +65841,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/Example.js":
-/*!********************************************!*\
-  !*** ./resources/js/components/Example.js ***!
-  \********************************************/
+/***/ "./resources/js/components/Container.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/Container.js ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -65854,30 +65854,726 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Login */ "./resources/js/components/Login.js");
+/* harmony import */ var _Todo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Todo */ "./resources/js/components/Todo.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
 
-function Example() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row justify-content-center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-8"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-header"
-  }, "Example Component"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-body"
-  }, "I'm an example component!")))));
-}
 
-/* harmony default export */ __webpack_exports__["default"] = (Example);
 
-if (document.getElementById('example')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Example, null), document.getElementById('example'));
-}
+
+var Container = /*#__PURE__*/function (_React$Component) {
+  _inherits(Container, _React$Component);
+
+  var _super = _createSuper(Container);
+
+  function Container(props) {
+    var _this;
+
+    _classCallCheck(this, Container);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      is_connected: false
+    }; // Needed to allow child dropping of method
+
+    _this.checkConnected = _this.checkConnected.bind(_assertThisInitialized(_this));
+    return _this;
+  } // Check the user connection and update state if needed
+  // Can be triggered by child
+
+
+  _createClass(Container, [{
+    key: "checkConnected",
+    value: function checkConnected() {
+      var _this2 = this;
+
+      console.log('Connection checking');
+      var token = localStorage.getItem('token');
+
+      if (token !== null) {
+        console.log('token is here');
+        var config = {
+          method: 'get',
+          url: 'http://138.68.111.211/api/isConnected',
+          headers: {
+            'Authorization': "Bearer ".concat(token)
+          }
+        };
+        axios(config).then(function (response) {
+          _this2.setState({
+            is_connected: true
+          });
+
+          console.log('Connection OK');
+        })["catch"](function (error) {
+          console.log('Connection failed');
+
+          _this2.setState({
+            is_connected: false
+          });
+        });
+      } else {
+        this.setState({
+          is_connected: false
+        });
+      }
+    } // Called after the component is mounted
+    // Allow for a first check of connectivity
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.checkConnected();
+    } // Called when update happens
+
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {}
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "flex-container center full-width viewport-full-height horizontal-align-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Login__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        is_connected: this.state.is_connected,
+        checkConnected: this.checkConnected
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Todo__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        is_connected: this.state.is_connected,
+        checkConnected: this.checkConnected
+      }));
+    }
+  }]);
+
+  return Container;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Container);
+var rootElement = document.querySelector("main");
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Container, null), rootElement);
+
+/***/ }),
+
+/***/ "./resources/js/components/Login.js":
+/*!******************************************!*\
+  !*** ./resources/js/components/Login.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var Login = /*#__PURE__*/function (_React$Component) {
+  _inherits(Login, _React$Component);
+
+  var _super = _createSuper(Login);
+
+  function Login(props) {
+    var _this;
+
+    _classCallCheck(this, Login);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      email: "",
+      password: ""
+    };
+    return _this;
+  } // Executed when the login form is submitted
+
+
+  _createClass(Login, [{
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      console.log(this.state); // Check that both state are not empty
+      //@TODO make a common method to allow Ajax
+
+      if (this.state.email !== null && this.state.password !== null) {
+        console.log('Connection send');
+        var config = {
+          method: 'post',
+          url: 'http://138.68.111.211/api/login',
+          data: {
+            email: this.state.email,
+            password: this.state.password
+          }
+        };
+        axios(config).then(function (response) {
+          if (response.data.token !== undefined) {
+            // If the server send back a token, we add it to the localStorage
+            localStorage.setItem('token', response.data.token);
+
+            _this2.props.checkConnected();
+
+            console.log("Connection OK");
+          } else {
+            //@TODO Add error
+            console.log("Connection KO");
+          }
+        })["catch"](function (error) {
+          //@TODO Add error
+          console.log(error);
+        });
+      } else {
+        //@TODO Add error
+        console.log('Fill your inputs first');
+      }
+    } // Allow for update of state when input is updated
+
+  }, {
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return (
+        /*#__PURE__*/
+        //Allow to display div only when the user is not connected
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "login-mod ".concat(this.props.is_connected ? 'hide' : 'show')
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          onSubmit: this.handleSubmit.bind(this),
+          className: "pure-form pure-form-stacked"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "title-text"
+        }, "TODO"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "full-width",
+          name: "email",
+          type: "text",
+          onChange: this.handleChange.bind(this)
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "full-width",
+          name: "password",
+          type: "password",
+          onChange: this.handleChange.bind(this)
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "full-width",
+          type: "submit"
+        }, "Connect")))
+      );
+    }
+  }]);
+
+  return Login;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Login);
+
+/***/ }),
+
+/***/ "./resources/js/components/Todo.js":
+/*!*****************************************!*\
+  !*** ./resources/js/components/Todo.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var Todo = /*#__PURE__*/function (_React$Component) {
+  _inherits(Todo, _React$Component);
+
+  var _super = _createSuper(Todo);
+
+  function Todo(props) {
+    var _this;
+
+    _classCallCheck(this, Todo);
+
+    _this = _super.call(this, props); //@TODO allow for cleaner state list
+
+    _this.state = {
+      todos: "",
+      newTodoName: "",
+      newTodoDetail: "",
+      todoDetailName: "",
+      todoDetailDetail: "",
+      todoDetailStatus: "",
+      todoDetailId: "",
+      detailUpdateName: "",
+      detailUpdateDetail: "",
+      detailUpdateStatus: ""
+    };
+    return _this;
+  }
+  /* API methods*/
+
+
+  _createClass(Todo, [{
+    key: "getTodos",
+    value: function getTodos(call) {
+      var token = localStorage.getItem('token');
+
+      if (token !== undefined) {
+        var config = {
+          method: 'get',
+          url: 'http://138.68.111.211/api/task/getAll',
+          headers: {
+            'Authorization': "Bearer ".concat(token)
+          }
+        };
+        axios(config).then(function (response) {
+          call(response);
+        })["catch"](function (error) {
+          //@TODO add error
+          console.log(error);
+        });
+      } else {
+        // Check connection
+        this.props.checkConnected();
+      }
+    }
+  }, {
+    key: "insertTodo",
+    value: function insertTodo(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var token = localStorage.getItem('token');
+
+      if (this.state.newTodoDetail !== "" && this.state.newTodoName !== "") {
+        if (token !== null) {
+          var config = {
+            method: 'post',
+            url: 'http://138.68.111.211/api/task/create',
+            headers: {
+              'Authorization': "Bearer ".concat(token)
+            },
+            data: {
+              name: this.state.newTodoName,
+              detail: this.state.newTodoDetail
+            }
+          };
+          axios(config).then(function (response) {
+            if (response.data.success) {
+              if (_this2.props.is_connected) {
+                _this2.getTodos(function (response) {
+                  debugger;
+
+                  _this2.setState({
+                    todos: response.data,
+                    newTodoDetail: "",
+                    newTodoName: ""
+                  });
+                });
+              }
+            } else {
+              //@TODO add error
+              console.log(response.data.error);
+            }
+          })["catch"](function (error) {
+            //@TODO add error
+            console.log(error);
+          });
+        } else {
+          this.props.checkConnected();
+        }
+      }
+    }
+  }, {
+    key: "deleteTodo",
+    value: function deleteTodo(e) {
+      var _this3 = this;
+
+      var id = e.target.dataset.id;
+      var token = localStorage.getItem('token');
+
+      if (token !== null) {
+        var config = {
+          method: 'get',
+          url: "http://138.68.111.211/api/task/delete?id=".concat(id),
+          headers: {
+            'Authorization': "Bearer ".concat(token)
+          }
+        };
+        axios(config).then(function (response) {
+          if (response.data.success) {
+            if (_this3.props.is_connected) {
+              _this3.getTodos(function (response) {
+                _this3.setState({
+                  todos: response.data
+                });
+              });
+            }
+          } else {
+            //@TODO add error
+            console.log(response.data.error);
+          }
+        })["catch"](function (error) {
+          //@TODO add error
+          console.log(error);
+        });
+      } else {
+        this.props.checkConnected();
+      }
+    }
+  }, {
+    key: "updateTodoCompleted",
+    value: function updateTodoCompleted(e) {
+      var _this4 = this;
+
+      var status = e.target.checked;
+      var id = e.target.dataset.id;
+      var token = localStorage.getItem('token');
+
+      if (token !== null) {
+        var config = {
+          method: 'post',
+          url: 'http://138.68.111.211/api/task/update',
+          headers: {
+            'Authorization': "Bearer ".concat(token)
+          },
+          data: {
+            id: id,
+            status: status
+          }
+        };
+        axios(config).then(function (response) {
+          if (response.data.success) {
+            if (_this4.props.is_connected) {
+              _this4.getTodos(function (response) {
+                _this4.setState({
+                  todos: response.data
+                });
+              });
+            }
+          } else {
+            //@TODO add error
+            console.log(response.data.error);
+          }
+        })["catch"](function (error) {
+          //@TODO add error
+          console.log(error);
+        });
+      } else {
+        this.props.checkConnected();
+      }
+    }
+  }, {
+    key: "handleUpdateSubmit",
+    value: function handleUpdateSubmit(e) {
+      var _this5 = this;
+
+      e.preventDefault();
+      var id = e.target.dataset.id;
+      var token = localStorage.getItem('token');
+
+      if (token !== null) {
+        var config = {
+          method: 'post',
+          url: 'http://138.68.111.211/api/task/update',
+          headers: {
+            'Authorization': "Bearer ".concat(token)
+          },
+          data: {
+            id: id,
+            name: this.state.todoDetailName,
+            detail: this.state.todoDetailDetail
+          }
+        };
+        axios(config).then(function (response) {
+          if (response.data.success) {
+            if (_this5.props.is_connected) {
+              _this5.getTodos(function (response) {
+                _this5.setState({
+                  todos: response.data
+                });
+
+                _this5.closeDetail();
+              });
+            }
+          } else {
+            //@TODO add error
+            console.log(response.data.error);
+          }
+        })["catch"](function (error) {
+          //@TODO add error
+          console.log(error);
+        });
+      } else {
+        this.props.checkConnected();
+      }
+    }
+  }, {
+    key: "displayDetail",
+    value: function displayDetail(e) {
+      var _this6 = this;
+
+      var id = e.target.dataset.id;
+      var token = localStorage.getItem('token');
+
+      if (token !== null) {
+        var config = {
+          method: 'get',
+          url: "http://138.68.111.211/api/task/getOne?id=".concat(id),
+          headers: {
+            'Authorization': "Bearer ".concat(token)
+          }
+        };
+        axios(config).then(function (response) {
+          if (response.data[0]) {
+            _this6.setState({
+              todoDetailId: response.data[0].id,
+              todoDetailName: response.data[0].name,
+              todoDetailDetail: response.data[0].detail,
+              todoDetailStatus: response.data[0].status
+            });
+          } else {
+            //@TODO add error
+            console.log(response.data);
+          }
+        })["catch"](function (error) {
+          //@TODO add error
+          console.log(error);
+        });
+      } else {
+        this.props.checkConnected();
+      }
+    }
+  }, {
+    key: "disconnect",
+    value: function disconnect(e) {
+      var _this7 = this;
+
+      var token = localStorage.getItem('token');
+      localStorage.removeItem('token');
+
+      if (token !== null) {
+        var config = {
+          method: 'get',
+          url: 'http://138.68.111.211/api/logout',
+          headers: {
+            'Authorization': "Bearer ".concat(token)
+          }
+        };
+        axios(config).then(function (response) {
+          _this7.setState({
+            todos: "",
+            newTodoName: "",
+            newTodoDetail: "",
+            todoDetailName: "",
+            todoDetailDetail: "",
+            todoDetailStatus: "",
+            todoDetailId: "",
+            detailUpdateName: "",
+            detailUpdateDetail: "",
+            detailUpdateStatus: ""
+          });
+
+          _this7.props.checkConnected();
+        })["catch"](function (error) {
+          //@TODO add error
+          console.log(error);
+        });
+      } else {
+        this.props.checkConnected();
+      }
+    }
+    /** Logic methods */
+
+  }, {
+    key: "closeDetail",
+    value: function closeDetail() {
+      this.setState({
+        todoDetailId: ""
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this8 = this;
+
+      if (this.props.is_connected) {
+        this.getTodos(function () {
+          _this8.setState({
+            todos: response.data
+          });
+        });
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var _this9 = this;
+
+      console.log('updating');
+
+      if (this.props.is_connected && this.state.todos === "") {
+        this.getTodos(function (response) {
+          _this9.setState({
+            todos: response.data
+          });
+        });
+      }
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this10 = this;
+
+      var todos = this.state.todos;
+      var TodosList = [];
+
+      if (todos !== "") {
+        todos.forEach(function (todo) {
+          if (todo.is_deleted === 0) {
+            TodosList.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+              key: todo.id
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+              "data-id": todo.id,
+              onClick: _this10.displayDetail.bind(_this10)
+            }, todo.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              "data-id": todo.id,
+              type: "checkbox",
+              defaultChecked: todo.status,
+              onChange: _this10.updateTodoCompleted.bind(_this10)
+            })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+              "data-id": todo.id,
+              onClick: _this10.deleteTodo.bind(_this10)
+            }, "Delete"))));
+          }
+        });
+      }
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "flex-container flex-column ".concat(this.props.is_connected ? 'show' : 'hide')
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "disconnect",
+        onClick: this.disconnect.bind(this)
+      }, "Disconnect"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, TodosList)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.insertTodo.bind(this)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "newTodoName",
+        type: "text",
+        placeholder: "title",
+        value: this.state.newTodoName,
+        onChange: this.handleChange.bind(this)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "newTodoDetail",
+        type: "text",
+        placeholder: "content",
+        value: this.state.newTodoDetail,
+        onChange: this.handleChange.bind(this)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit"
+      }, "Insert")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-container ".concat(this.state.todoDetailId !== "" ? 'show' : 'hide')
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.closeDetail.bind(this)
+      }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, this.state.todoDetailName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, this.state.todoDetailDetail)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        "data-id": this.state.todoDetailId,
+        onSubmit: this.handleUpdateSubmit.bind(this)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "todoDetailName",
+        defaultValue: this.state.todoDetailName,
+        onChange: this.handleChange.bind(this)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "todoDetailDetail",
+        defaultValue: this.state.todoDetailDetail,
+        onChange: this.handleChange.bind(this)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit"
+      }, "Update"))));
+    }
+  }]);
+
+  return Todo;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Todo);
 
 /***/ }),
 

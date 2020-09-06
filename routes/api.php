@@ -19,6 +19,8 @@ Route::post('createAccount', 'AuthenticationController@createAccount')->name('cr
 
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', 'AuthenticationController@logout')->name('logout');
+    Route::get('isConnected', 'AuthenticationController@isConnected')->name('isConnected');
+
     Route::prefix('task')->group(function () {
         Route::post('create', 'TaskController@create')->name('createTask');
         Route::post('update', 'TaskController@update')->name('updateTask');

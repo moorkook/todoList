@@ -6,3 +6,51 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+.hide {
+    display:none!important;
+}
+.show {
+    display: inherit;
+}
+
+.center {
+    justify-content: center;
+}
+.basic-background {
+    background-color: #6d7a80;
+    background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
+}
+.flex-container {
+    display: flex;
+}
+.three-fifth {
+    width: 60vw;
+}
+.full-width {
+    width: 100%;
+}
+.viewport-full-height {
+    height: 100vh;
+}
+.horizontal-align-center {
+    align-items: center;
+}
+.title-text {
+    text-align:center;
+}
+.flex-column {
+    flex-direction: column;
+}
+
+div.login-mod {
+
+}
+
+// ID 
+#disconnect {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

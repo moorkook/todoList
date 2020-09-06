@@ -60,7 +60,7 @@ class Container extends React.Component {
 
   render() {
     return(
-      <div className="flex-container center full-width viewport-full-height horizontal-align-center">
+      <div className="flex-container center full-width viewport-full-height horizontal-align-center background-neutral">
         <Login is_connected={this.state.is_connected} checkConnected={this.checkConnected} />
         <Todo is_connected={this.state.is_connected} checkConnected={this.checkConnected} />
 

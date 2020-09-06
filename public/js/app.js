@@ -65955,7 +65955,7 @@ var Container = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "flex-container center full-width viewport-full-height horizontal-align-center"
+        className: "flex-container center full-width viewport-full-height horizontal-align-center background-neutral"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Login__WEBPACK_IMPORTED_MODULE_2__["default"], {
         is_connected: this.state.is_connected,
         checkConnected: this.checkConnected
@@ -66096,7 +66096,7 @@ var Login = /*#__PURE__*/function (_React$Component) {
         }, "TODO"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "full-width",
           name: "email",
-          type: "text",
+          type: "email",
           onChange: this.handleChange.bind(this)
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "full-width",
@@ -66180,7 +66180,8 @@ var Todo = /*#__PURE__*/function (_React$Component) {
       todoDetailId: "",
       detailUpdateName: "",
       detailUpdateDetail: "",
-      detailUpdateStatus: ""
+      detailUpdateStatus: "",
+      detailEdit: false
     };
     return _this;
   }
@@ -66219,7 +66220,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       var token = localStorage.getItem('token');
 
-      if (this.state.newTodoDetail !== "" && this.state.newTodoName !== "") {
+      if (this.state.newTodoName !== "") {
         if (token !== null) {
           var config = {
             method: 'post',
@@ -66364,10 +66365,11 @@ var Todo = /*#__PURE__*/function (_React$Component) {
             if (_this5.props.is_connected) {
               _this5.getTodos(function (response) {
                 _this5.setState({
-                  todos: response.data
-                });
+                  todos: response.data,
+                  detailEdit: !_this5.state.detailEdit
+                }); //MicroModal.hide('modal-detail');
+                //this.closeDetail();
 
-                _this5.closeDetail();
               });
             }
           } else {
@@ -66406,6 +66408,8 @@ var Todo = /*#__PURE__*/function (_React$Component) {
               todoDetailDetail: response.data[0].detail,
               todoDetailStatus: response.data[0].status
             });
+
+            MicroModal.show('modal-detail');
           } else {
             //@TODO add error
             console.log(response.data);
@@ -66460,6 +66464,13 @@ var Todo = /*#__PURE__*/function (_React$Component) {
     /** Logic methods */
 
   }, {
+    key: "toggleEdit",
+    value: function toggleEdit() {
+      this.setState({
+        detailEdit: !this.state.detailEdit
+      });
+    }
+  }, {
     key: "closeDetail",
     value: function closeDetail() {
       this.setState({
@@ -66511,62 +66522,97 @@ var Todo = /*#__PURE__*/function (_React$Component) {
         todos.forEach(function (todo) {
           if (todo.is_deleted === 0) {
             TodosList.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-              key: todo.id
-            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-              "data-id": todo.id,
-              onClick: _this10.displayDetail.bind(_this10)
-            }, todo.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              key: todo.id,
+              className: "todo-line"
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              className: "show-hand",
               "data-id": todo.id,
               type: "checkbox",
               defaultChecked: todo.status,
               onChange: _this10.updateTodoCompleted.bind(_this10)
-            })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+              className: "show-hand",
+              "data-id": todo.id,
+              onClick: _this10.displayDetail.bind(_this10)
+            }, todo.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
               "data-id": todo.id,
               onClick: _this10.deleteTodo.bind(_this10)
-            }, "Delete"))));
+            }, "X"))));
           }
         });
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "flex-container flex-column ".concat(this.props.is_connected ? 'show' : 'hide')
+        className: "flex-container flex-column half-width ".concat(this.props.is_connected ? 'show' : 'hide')
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         id: "disconnect",
         onClick: this.disconnect.bind(this)
-      }, "Disconnect"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, TodosList)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.insertTodo.bind(this)
+      }, "disconnect"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Tasks"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "full-width"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, TodosList)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.insertTodo.bind(this),
+        className: "flex-container flex-column"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         name: "newTodoName",
         type: "text",
-        placeholder: "title",
+        placeholder: "Task",
+        maxLength: "100",
         value: this.state.newTodoName,
         onChange: this.handleChange.bind(this)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         name: "newTodoDetail",
         type: "text",
-        placeholder: "content",
+        placeholder: "Description",
+        maxLength: "200",
         value: this.state.newTodoDetail,
         onChange: this.handleChange.bind(this)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, "Insert")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "modal-container ".concat(this.state.todoDetailId !== "" ? 'show' : 'hide')
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.closeDetail.bind(this)
-      }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, this.state.todoDetailName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, this.state.todoDetailDetail)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "modal micromodal-slide",
+        id: "modal-detail",
+        "aria-hidden": "true"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal__overlay",
+        tabIndex: "-1",
+        "data-micromodal-close": true
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal__container",
+        role: "dialog",
+        "aria-modal": "true",
+        "aria-labelledby": "modal-1-title"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
+        className: "modal__header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        className: "modal__title",
+        id: ""
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "modal__close",
+        "aria-label": "Close modal",
+        "data-micromodal-close": true
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
+        className: "modal__content",
+        id: "modal-1-content"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.toggleEdit.bind(this),
+        className: "".concat(this.state.detailEdit ? "hide" : "show", " show-hand")
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, this.state.todoDetailName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.todoDetailDetail)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "".concat(this.state.detailEdit ? "show" : "hide", " flex-container flex-column"),
         "data-id": this.state.todoDetailId,
         onSubmit: this.handleUpdateSubmit.bind(this)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         name: "todoDetailName",
+        maxLength: "100",
         defaultValue: this.state.todoDetailName,
         onChange: this.handleChange.bind(this)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         name: "todoDetailDetail",
+        maxLength: "200",
         defaultValue: this.state.todoDetailDetail,
         onChange: this.handleChange.bind(this)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
-      }, "Update"))));
+      }, "Update")))))));
     }
   }]);
 

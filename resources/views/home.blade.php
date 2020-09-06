@@ -10,5 +10,6 @@
 <body class="flex-container basic-background center">
     <main class="three-fifth flex-container center"></main>
 </body>
+<script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 <script defer src="js/app.js"></script>
 </html>

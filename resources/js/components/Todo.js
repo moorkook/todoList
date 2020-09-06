@@ -16,6 +16,7 @@ class Todo extends React.Component {
             detailUpdateName: "",
             detailUpdateDetail: "",
             detailUpdateStatus: "",
+            detailEdit: false,
         };
     }
   /* API methods*/
@@ -45,7 +46,7 @@ class Todo extends React.Component {
     insertTodo(e) {
         e.preventDefault();
         let token = localStorage.getItem('token');
-        if(this.state.newTodoDetail !== "" && this.state.newTodoName !== "") {
+        if(this.state.newTodoName !== "") {
             if(token !== null) {
                 var config = {
                     method: 'post',
@@ -184,8 +185,10 @@ class Todo extends React.Component {
                         this.getTodos((response)=> {
                             this.setState({
                                 todos: response.data,
+                                detailEdit: !this.state.detailEdit,  
                             })
-                            this.closeDetail();
+                            //MicroModal.hide('modal-detail');
+                            //this.closeDetail();
                         });
                     }
                     } else {
@@ -222,6 +225,7 @@ class Todo extends React.Component {
                     todoDetailDetail: response.data[0].detail,
                     todoDetailStatus: response.data[0].status,
                 })
+                MicroModal.show('modal-detail');
               } else {
                 //@TODO add error
                 console.log(response.data);
@@ -274,6 +278,11 @@ class Todo extends React.Component {
   }
 
   /** Logic methods */
+    toggleEdit() {
+        this.setState({
+            detailEdit: !this.state.detailEdit,
+        })
+    }
     closeDetail() {
         this.setState({
             todoDetailId: ""
@@ -311,51 +320,53 @@ class Todo extends React.Component {
         todos.forEach((todo) => {
             if(todo.is_deleted === 0) {
                 TodosList.push(
-                    <tr key={todo.id}>
+                    <tr key={todo.id} className="todo-line">
+                        <td><input className="show-hand" data-id={todo.id} type="checkbox" defaultChecked={todo.status} onChange={this.updateTodoCompleted.bind(this)}></input></td>
                         <td>
-                            <span data-id={todo.id} onClick={this.displayDetail.bind(this)}>{todo.name}</span>
+                            <span className="show-hand" data-id={todo.id} onClick={this.displayDetail.bind(this)}>{todo.name}</span>
                         </td>
-                        <td><input data-id={todo.id} type="checkbox" defaultChecked={todo.status} onChange={this.updateTodoCompleted.bind(this)}></input></td>
-                        <td><button data-id={todo.id} onClick={this.deleteTodo.bind(this)}>Delete</button></td>
+                        <td><button data-id={todo.id} onClick={this.deleteTodo.bind(this)}>X</button></td>
                     </tr>
                 ); 
             }
         })
     }
     return(
-      <div className={`flex-container flex-column ${this.props.is_connected ? 'show' : 'hide'}`}>
-        <button id="disconnect" onClick={this.disconnect.bind(this)}>Disconnect</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                </tr>
-            </thead>
+      <div className={`flex-container flex-column half-width ${this.props.is_connected ? 'show' : 'hide'}`}>
+        <button id="disconnect" onClick={this.disconnect.bind(this)}>disconnect</button>
+        <h1>Tasks</h1>
+        <table className="full-width">
             <tbody>
                 {TodosList}
             </tbody>
         </table>
 
-        <form onSubmit={this.insertTodo.bind(this)}>
-            <input name="newTodoName" type="text" placeholder="title" value={this.state.newTodoName} onChange={this.handleChange.bind(this)}></input>
-            <input name="newTodoDetail" type="text" placeholder="content" value={this.state.newTodoDetail} onChange={this.handleChange.bind(this)}></input>
+        <form onSubmit={this.insertTodo.bind(this)} className="flex-container flex-column">
+            <input name="newTodoName" type="text" placeholder="Task" maxLength="100" value={this.state.newTodoName} onChange={this.handleChange.bind(this)}></input>
+            <textarea name="newTodoDetail" type="text" placeholder="Description" maxLength="200" value={this.state.newTodoDetail} onChange={this.handleChange.bind(this)}></textarea>
             <button type="submit">Insert</button>
         </form>
-        <div className={`modal-container ${this.state.todoDetailId !== "" ? 'show' : 'hide'}`}>
-            <button onClick={this.closeDetail.bind(this)}>Close</button>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>{this.state.todoDetailName}</td>
-                        <td>{this.state.todoDetailDetail}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <form data-id={this.state.todoDetailId} onSubmit={this.handleUpdateSubmit.bind(this)}>
-                <input name="todoDetailName" defaultValue={this.state.todoDetailName} onChange={this.handleChange.bind(this)}></input>
-                <input name="todoDetailDetail" defaultValue={this.state.todoDetailDetail} onChange={this.handleChange.bind(this)}></input>
-                <button type="submit">Update</button>
-            </form>
+        <div className="modal micromodal-slide" id="modal-detail" aria-hidden="true">
+            <div className="modal__overlay" tabIndex="-1" data-micromodal-close>
+            <div className="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header className="modal__header">
+                    <h2 className="modal__title" id="">
+                    </h2>
+                    <button className="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <main className="modal__content" id="modal-1-content">
+                    <div onClick={this.toggleEdit.bind(this)} className={`${this.state.detailEdit ? "hide" : "show"} show-hand`}>
+                        <h2>{this.state.todoDetailName}</h2>
+                        <p>{this.state.todoDetailDetail}</p>
+                    </div>
+                    <form className={`${this.state.detailEdit ? "show" : "hide"} flex-container flex-column`} data-id={this.state.todoDetailId} onSubmit={this.handleUpdateSubmit.bind(this)}>
+                        <input name="todoDetailName" maxLength="100" defaultValue={this.state.todoDetailName} onChange={this.handleChange.bind(this)}></input>
+                        <textarea name="todoDetailDetail" maxLength="200" defaultValue={this.state.todoDetailDetail} onChange={this.handleChange.bind(this)}></textarea>
+                        <button type="submit">Update</button>
+                    </form>
+                </main>
+            </div>
+            </div>
         </div>
       </div>
     )

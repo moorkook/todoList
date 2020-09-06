@@ -61,7 +61,7 @@ class Login extends React.Component {
       <div className={`login-mod ${this.props.is_connected ? 'hide' : 'show'}`}>
         <form onSubmit={this.handleSubmit.bind(this)} className="pure-form pure-form-stacked">
             <h1 className="title-text">TODO</h1>
-            <input className="full-width" name="email" type="text" onChange={this.handleChange.bind(this)} ></input>
+            <input className="full-width" name="email" type="email" onChange={this.handleChange.bind(this)} ></input>
             <input className="full-width" name="password" type="password" onChange={this.handleChange.bind(this)} ></input>
             <button className="full-width" type="submit">Connect</button>
         </form>

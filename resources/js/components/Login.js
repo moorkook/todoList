@@ -7,9 +7,35 @@ class Login extends React.Component {
     this.state = {
         email: "",
         password: "",
+        registerName: "",
+        registerEmail: "",
+        registerPassword: "",
+        register: false,
     }
   }
 
+  handleSubmitCreate(e) {
+    e.preventDefault();
+    if(this.state.registerEmail !== null && this.state.registerPassword !== null && this.state.registerName !== null) {
+      let config = {
+        method: 'post',
+        url: 'http://138.68.111.211/api/createAccount',
+        data : {
+          email: this.state.registerEmail,
+          password: this.state.registerPassword,
+          name: this.state.registerName,
+        }
+      };
+      axios(config)
+      .then((response) => {
+        this.toggleRegister();
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+  }
   // Executed when the login form is submitted
   handleSubmit(e) {
     e.preventDefault();
@@ -54,16 +80,28 @@ class Login extends React.Component {
           [e.target.name]: e.target.value
       })
   }
-
+  toggleRegister() {
+    this.setState({
+        register: !this.state.register,
+    })
+  }
   render() {
     return(
         //Allow to display div only when the user is not connected
-      <div className={`login-mod ${this.props.is_connected ? 'hide' : 'show'}`}>
-        <form onSubmit={this.handleSubmit.bind(this)} className="pure-form pure-form-stacked">
-            <h1 className="title-text">TODO</h1>
-            <input className="full-width" name="email" type="email" onChange={this.handleChange.bind(this)} ></input>
-            <input className="full-width" name="password" type="password" onChange={this.handleChange.bind(this)} ></input>
-            <button className="full-width" type="submit">Connect</button>
+      <div className={`flex-container flex-column login-mod ${this.props.is_connected ? 'hide' : 'show'}`}>
+        <h1 className="title-text">TODO</h1>
+        <form className={`flex-container flex-column ${this.state.register ? "hide" : "show"}`} onSubmit={this.handleSubmit.bind(this)}>
+            <input className="full-width" name="email" type="email" onChange={this.handleChange.bind(this)} placeholder="email@email.fr" ></input>
+            <input className="full-width" name="password" type="password" onChange={this.handleChange.bind(this)} placeholder="password"></input>
+            <button className="full-width" type="submit">Login</button>
+            <p className="show-hand" onClick={this.toggleRegister.bind(this)}>Go to Register</p>
+        </form>
+        <form className={`flex-container flex-column ${this.state.register ? "show" : "hide"}`} onSubmit={this.handleSubmitCreate.bind(this)}>
+            <input className="full-width" name="registerName" type="text" onChange={this.handleChange.bind(this)} placeholder="Name" ></input>
+            <input className="full-width" name="registerEmail" type="email" onChange={this.handleChange.bind(this)} placeholder="Email"></input>
+            <input className="full-width" name="registerPassword" type="password" onChange={this.handleChange.bind(this)} placeholder="Password"></input>
+            <button className="full-width" type="submit">Register</button>
+            <p className="show-hand" onClick={this.toggleRegister.bind(this)}>Go to Login</p>
         </form>
       </div>
     )

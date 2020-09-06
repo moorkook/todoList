@@ -66028,16 +66028,46 @@ var Login = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       email: "",
-      password: ""
+      password: "",
+      registerName: "",
+      registerEmail: "",
+      registerPassword: "",
+      register: false
     };
     return _this;
-  } // Executed when the login form is submitted
-
+  }
 
   _createClass(Login, [{
+    key: "handleSubmitCreate",
+    value: function handleSubmitCreate(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+
+      if (this.state.registerEmail !== null && this.state.registerPassword !== null && this.state.registerName !== null) {
+        var config = {
+          method: 'post',
+          url: 'http://138.68.111.211/api/createAccount',
+          data: {
+            email: this.state.registerEmail,
+            password: this.state.registerPassword,
+            name: this.state.registerName
+          }
+        };
+        axios(config).then(function (response) {
+          _this2.toggleRegister();
+
+          console.log(JSON.stringify(response.data));
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    } // Executed when the login form is submitted
+
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       e.preventDefault();
       console.log(this.state); // Check that both state are not empty
@@ -66058,7 +66088,7 @@ var Login = /*#__PURE__*/function (_React$Component) {
             // If the server send back a token, we add it to the localStorage
             localStorage.setItem('token', response.data.token);
 
-            _this2.props.checkConnected();
+            _this3.props.checkConnected();
 
             console.log("Connection OK");
           } else {
@@ -66081,32 +66111,71 @@ var Login = /*#__PURE__*/function (_React$Component) {
       this.setState(_defineProperty({}, e.target.name, e.target.value));
     }
   }, {
+    key: "toggleRegister",
+    value: function toggleRegister() {
+      this.setState({
+        register: !this.state.register
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return (
         /*#__PURE__*/
         //Allow to display div only when the user is not connected
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "login-mod ".concat(this.props.is_connected ? 'hide' : 'show')
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          onSubmit: this.handleSubmit.bind(this),
-          className: "pure-form pure-form-stacked"
+          className: "flex-container flex-column login-mod ".concat(this.props.is_connected ? 'hide' : 'show')
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
           className: "title-text"
-        }, "TODO"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }, "TODO"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          className: "flex-container flex-column ".concat(this.state.register ? "hide" : "show"),
+          onSubmit: this.handleSubmit.bind(this)
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "full-width",
           name: "email",
           type: "email",
-          onChange: this.handleChange.bind(this)
+          onChange: this.handleChange.bind(this),
+          placeholder: "email@email.fr"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           className: "full-width",
           name: "password",
           type: "password",
-          onChange: this.handleChange.bind(this)
+          onChange: this.handleChange.bind(this),
+          placeholder: "password"
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "full-width",
           type: "submit"
-        }, "Connect")))
+        }, "Login"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "show-hand",
+          onClick: this.toggleRegister.bind(this)
+        }, "Go to Register")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          className: "flex-container flex-column ".concat(this.state.register ? "show" : "hide"),
+          onSubmit: this.handleSubmitCreate.bind(this)
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "full-width",
+          name: "registerName",
+          type: "text",
+          onChange: this.handleChange.bind(this),
+          placeholder: "Name"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "full-width",
+          name: "registerEmail",
+          type: "email",
+          onChange: this.handleChange.bind(this),
+          placeholder: "Email"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "full-width",
+          name: "registerPassword",
+          type: "password",
+          onChange: this.handleChange.bind(this),
+          placeholder: "Password"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "full-width",
+          type: "submit"
+        }, "Register"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "show-hand",
+          onClick: this.toggleRegister.bind(this)
+        }, "Go to Login")))
       );
     }
   }]);

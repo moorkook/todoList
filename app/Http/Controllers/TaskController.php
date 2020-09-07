@@ -116,6 +116,7 @@ class TaskController extends Controller
     public function getAll(Request $request) {
         $tasks = Task::where([
             ['user_id', '=', $request->user()->id],
+            ['is_deleted', '!=', 1]
         ])->get();
         return response()->json($tasks);
     }

@@ -35,8 +35,7 @@ class Todo extends React.Component {
                 call(response);
             })
             .catch(function (error) {
-                //@TODO add error
-                console.log(error);
+                this.props.setMessage('Error : getTodos has failed');
             });
         } else {
             // Check connection
@@ -65,7 +64,6 @@ class Todo extends React.Component {
                     if(response.data.success) {
                         if(this.props.is_connected) {
                             this.getTodos((response)=> {
-                                debugger;
                                 this.setState({
                                     todos: response.data,
                                     newTodoDetail: "",
@@ -74,13 +72,11 @@ class Todo extends React.Component {
                             });
                         }
                     } else {
-                        //@TODO add error
-                        console.log(response.data.error)
+                        this.props.setMessage('Error : insert has failed');
                     }
                 })
                 .catch(function (error) {
-                    //@TODO add error
-                    console.log(error);
+                    this.props.setMessage('Error : insert has failed');
                 });
             } else {
                 this.props.checkConnected();
@@ -107,16 +103,15 @@ class Todo extends React.Component {
                             this.setState({
                                 todos: response.data,
                             })
+                            this.props.setMessage('Success : task deleted');
                         });
                     }
                 } else {
-                    //@TODO add error
-                    console.log(response.data.error)
+                    this.props.setMessage('Error : failed to delete');
                 }
             })
             .catch(function (error) {
-                //@TODO add error
-                console.log(error);
+                this.props.setMessage('Error : failed to delete');
             });
         } else {
             this.props.checkConnected();
@@ -149,13 +144,11 @@ class Todo extends React.Component {
                         });
                     }
                 } else {
-                    //@TODO add error
-                    console.log(response.data.error)
+                    this.props.setMessage('Error : update failed');
                 }
             })
             .catch(function (error) {
-                //@TODO add error
-                console.log(error);
+                this.props.setMessage('Error : update failed');
             });
         } else {
             this.props.checkConnected();
@@ -192,13 +185,11 @@ class Todo extends React.Component {
                         });
                     }
                     } else {
-                        //@TODO add error
-                        console.log(response.data.error)
+                        this.props.setMessage('Error : update failed');
                     }
                 })
                 .catch(function (error) {
-                    //@TODO add error
-                    console.log(error);
+                    this.props.setMessage('Error : update failed');
                 });
         } else {
             this.props.checkConnected();
@@ -227,13 +218,11 @@ class Todo extends React.Component {
                 })
                 MicroModal.show('modal-detail');
               } else {
-                //@TODO add error
-                console.log(response.data);
+                this.props.setMessage('Error : cannot display task detail');
               }
           })
           .catch(function (error) {
-            //@TODO add error
-            console.log(error);
+            this.props.setMessage('Error : cannot display task detail');
           });
     } else {
         this.props.checkConnected();
@@ -268,8 +257,7 @@ class Todo extends React.Component {
             this.props.checkConnected();
           })
           .catch(function (error) {
-            //@TODO add error
-            console.log(error);
+            this.props.setMessage("Error : cannot disconnect (it's a bad one)");
           });
     } else {
         this.props.checkConnected();

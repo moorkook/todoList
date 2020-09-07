@@ -60,17 +60,14 @@ class Login extends React.Component {
                 this.props.checkConnected();
                 console.log("Connection OK");
             } else {
-                //@TODO Add error
-                console.log("Connection KO");
+                this.props.setMessage("Error : login failed");
             }
         })
         .catch(function (error) {
-            //@TODO Add error
-            console.log(error);
+            this.props.setMessage("Error : login failed");
         });
     } else {
-        //@TODO Add error
-        console.log('Fill your inputs first');
+        this.props.setMessage("Warning : fill all inputs before connecting");
     }
   }
 

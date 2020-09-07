@@ -10956,6 +10956,22 @@ a.text-dark:focus {
   cursor: pointer;
 }
 
+.opacity-hover:hover {
+  opacity: 0.7;
+  transition: opacity 0.6s;
+}
+
+.log-container {
+  position: absolute;
+  top: 0;
+  border: 1px solid grey;
+  padding: 1.5rem;
+  font-size: 1rem;
+  background-color: cornsilk;
+  opacity: 1;
+  transition: opacity 0.6s;
+}
+
 input[type=checkbox] {
   transform: scale(1.5);
 }

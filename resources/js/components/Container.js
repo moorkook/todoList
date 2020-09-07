@@ -2,18 +2,26 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
 import Login from "./Login";
+import Log from "./Log";
 import Todo from "./Todo";
 
 class Container extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      is_connected: false
+      is_connected: false,
+      message: ""
     }
     // Needed to allow child dropping of method
     this.checkConnected = this.checkConnected.bind(this);
+    this.setMessage = this.setMessage.bind(this);
   }
 
+  setMessage(newMessage) {
+    this.setState({
+      message: newMessage,
+    })
+  }
   // Check the user connection and update state if needed
   // Can be triggered by child
   checkConnected() {
@@ -61,8 +69,9 @@ class Container extends React.Component {
   render() {
     return(
       <div className="flex-container center full-width viewport-full-height horizontal-align-center background-neutral">
-        <Login is_connected={this.state.is_connected} checkConnected={this.checkConnected} />
-        <Todo is_connected={this.state.is_connected} checkConnected={this.checkConnected} />
+        <Log is_connected={this.state.is_connected} checkConnected={this.checkConnected} message={this.state.message} setMessage={this.setMessage} />
+        <Login is_connected={this.state.is_connected} checkConnected={this.checkConnected } setMessage={this.setMessage}/>
+        <Todo is_connected={this.state.is_connected} checkConnected={this.checkConnected} setMessage={this.setMessage}/>
 
       </div>
     )

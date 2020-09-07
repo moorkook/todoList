@@ -65855,7 +65855,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Login */ "./resources/js/components/Login.js");
-/* harmony import */ var _Todo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Todo */ "./resources/js/components/Todo.js");
+/* harmony import */ var _Log__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Log */ "./resources/js/components/Log.js");
+/* harmony import */ var _Todo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Todo */ "./resources/js/components/Todo.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65883,6 +65884,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Container = /*#__PURE__*/function (_React$Component) {
   _inherits(Container, _React$Component);
 
@@ -65895,16 +65897,25 @@ var Container = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      is_connected: false
+      is_connected: false,
+      message: ""
     }; // Needed to allow child dropping of method
 
     _this.checkConnected = _this.checkConnected.bind(_assertThisInitialized(_this));
+    _this.setMessage = _this.setMessage.bind(_assertThisInitialized(_this));
     return _this;
-  } // Check the user connection and update state if needed
-  // Can be triggered by child
-
+  }
 
   _createClass(Container, [{
+    key: "setMessage",
+    value: function setMessage(newMessage) {
+      this.setState({
+        message: newMessage
+      });
+    } // Check the user connection and update state if needed
+    // Can be triggered by child
+
+  }, {
     key: "checkConnected",
     value: function checkConnected() {
       var _this2 = this;
@@ -65956,12 +65967,19 @@ var Container = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "flex-container center full-width viewport-full-height horizontal-align-center background-neutral"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Login__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Log__WEBPACK_IMPORTED_MODULE_3__["default"], {
         is_connected: this.state.is_connected,
-        checkConnected: this.checkConnected
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Todo__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        checkConnected: this.checkConnected,
+        message: this.state.message,
+        setMessage: this.setMessage
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Login__WEBPACK_IMPORTED_MODULE_2__["default"], {
         is_connected: this.state.is_connected,
-        checkConnected: this.checkConnected
+        checkConnected: this.checkConnected,
+        setMessage: this.setMessage
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Todo__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        is_connected: this.state.is_connected,
+        checkConnected: this.checkConnected,
+        setMessage: this.setMessage
       }));
     }
   }]);
@@ -65972,6 +65990,84 @@ var Container = /*#__PURE__*/function (_React$Component) {
 /* harmony default export */ __webpack_exports__["default"] = (Container);
 var rootElement = document.querySelector("main");
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Container, null), rootElement);
+
+/***/ }),
+
+/***/ "./resources/js/components/Log.js":
+/*!****************************************!*\
+  !*** ./resources/js/components/Log.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var Log = /*#__PURE__*/function (_React$Component) {
+  _inherits(Log, _React$Component);
+
+  var _super = _createSuper(Log);
+
+  function Log(props) {
+    var _this;
+
+    _classCallCheck(this, Log);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      display: false,
+      message: _this.props.message
+    };
+    return _this;
+  }
+
+  _createClass(Log, [{
+    key: "removeMessage",
+    value: function removeMessage() {
+      this.props.setMessage('');
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.removeMessage.bind(this),
+        className: "log-container show-hand opacity-hover ".concat(this.props.message !== "" ? 'show' : 'hide')
+      }, this.props.message);
+    }
+  }]);
+
+  return Log;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Log);
 
 /***/ }),
 
@@ -66092,16 +66188,13 @@ var Login = /*#__PURE__*/function (_React$Component) {
 
             console.log("Connection OK");
           } else {
-            //@TODO Add error
-            console.log("Connection KO");
+            _this3.props.setMessage("Error : login failed");
           }
         })["catch"](function (error) {
-          //@TODO Add error
-          console.log(error);
+          this.props.setMessage("Error : login failed");
         });
       } else {
-        //@TODO Add error
-        console.log('Fill your inputs first');
+        this.props.setMessage("Warning : fill all inputs before connecting");
       }
     } // Allow for update of state when input is updated
 
@@ -66273,8 +66366,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
         axios(config).then(function (response) {
           call(response);
         })["catch"](function (error) {
-          //@TODO add error
-          console.log(error);
+          this.props.setMessage('Error : getTodos has failed');
         });
       } else {
         // Check connection
@@ -66306,8 +66398,6 @@ var Todo = /*#__PURE__*/function (_React$Component) {
             if (response.data.success) {
               if (_this2.props.is_connected) {
                 _this2.getTodos(function (response) {
-                  debugger;
-
                   _this2.setState({
                     todos: response.data,
                     newTodoDetail: "",
@@ -66316,12 +66406,10 @@ var Todo = /*#__PURE__*/function (_React$Component) {
                 });
               }
             } else {
-              //@TODO add error
-              console.log(response.data.error);
+              _this2.props.setMessage('Error : insert has failed');
             }
           })["catch"](function (error) {
-            //@TODO add error
-            console.log(error);
+            this.props.setMessage('Error : insert has failed');
           });
         } else {
           this.props.checkConnected();
@@ -66351,15 +66439,15 @@ var Todo = /*#__PURE__*/function (_React$Component) {
                 _this3.setState({
                   todos: response.data
                 });
+
+                _this3.props.setMessage('Success : task deleted');
               });
             }
           } else {
-            //@TODO add error
-            console.log(response.data.error);
+            _this3.props.setMessage('Error : failed to delete');
           }
         })["catch"](function (error) {
-          //@TODO add error
-          console.log(error);
+          this.props.setMessage('Error : failed to delete');
         });
       } else {
         this.props.checkConnected();
@@ -66396,12 +66484,10 @@ var Todo = /*#__PURE__*/function (_React$Component) {
               });
             }
           } else {
-            //@TODO add error
-            console.log(response.data.error);
+            _this4.props.setMessage('Error : update failed');
           }
         })["catch"](function (error) {
-          //@TODO add error
-          console.log(error);
+          this.props.setMessage('Error : update failed');
         });
       } else {
         this.props.checkConnected();
@@ -66442,12 +66528,10 @@ var Todo = /*#__PURE__*/function (_React$Component) {
               });
             }
           } else {
-            //@TODO add error
-            console.log(response.data.error);
+            _this5.props.setMessage('Error : update failed');
           }
         })["catch"](function (error) {
-          //@TODO add error
-          console.log(error);
+          this.props.setMessage('Error : update failed');
         });
       } else {
         this.props.checkConnected();
@@ -66480,12 +66564,10 @@ var Todo = /*#__PURE__*/function (_React$Component) {
 
             MicroModal.show('modal-detail');
           } else {
-            //@TODO add error
-            console.log(response.data);
+            _this6.props.setMessage('Error : cannot display task detail');
           }
         })["catch"](function (error) {
-          //@TODO add error
-          console.log(error);
+          this.props.setMessage('Error : cannot display task detail');
         });
       } else {
         this.props.checkConnected();
@@ -66523,8 +66605,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
 
           _this7.props.checkConnected();
         })["catch"](function (error) {
-          //@TODO add error
-          console.log(error);
+          this.props.setMessage("Error : cannot disconnect (it's a bad one)");
         });
       } else {
         this.props.checkConnected();

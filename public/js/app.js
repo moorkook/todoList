@@ -66084,6 +66084,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _helpers_Axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/Axios */ "./resources/js/helpers/Axios.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -66107,6 +66108,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -66353,6 +66355,8 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   _createClass(Todo, [{
     key: "getTodos",
     value: function getTodos(call) {
+      var _this2 = this;
+
       var token = localStorage.getItem('token');
 
       if (token !== undefined) {
@@ -66366,7 +66370,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
         axios(config).then(function (response) {
           call(response);
         })["catch"](function (error) {
-          this.props.setMessage('Error : getTodos has failed');
+          _this2.props.setMessage('Error : getTodos has failed');
         });
       } else {
         // Check connection
@@ -66376,7 +66380,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "insertTodo",
     value: function insertTodo(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       e.preventDefault();
       var token = localStorage.getItem('token');
@@ -66396,9 +66400,9 @@ var Todo = /*#__PURE__*/function (_React$Component) {
           };
           axios(config).then(function (response) {
             if (response.data.success) {
-              if (_this2.props.is_connected) {
-                _this2.getTodos(function (response) {
-                  _this2.setState({
+              if (_this3.props.is_connected) {
+                _this3.getTodos(function (response) {
+                  _this3.setState({
                     todos: response.data,
                     newTodoDetail: "",
                     newTodoName: ""
@@ -66406,7 +66410,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
                 });
               }
             } else {
-              _this2.props.setMessage('Error : insert has failed');
+              _this3.props.setMessage('Error : insert has failed');
             }
           })["catch"](function (error) {
             this.props.setMessage('Error : insert has failed');
@@ -66419,7 +66423,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "deleteTodo",
     value: function deleteTodo(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       var id = e.target.dataset.id;
       var token = localStorage.getItem('token');
@@ -66434,17 +66438,17 @@ var Todo = /*#__PURE__*/function (_React$Component) {
         };
         axios(config).then(function (response) {
           if (response.data.success) {
-            if (_this3.props.is_connected) {
-              _this3.getTodos(function (response) {
-                _this3.setState({
+            if (_this4.props.is_connected) {
+              _this4.getTodos(function (response) {
+                _this4.setState({
                   todos: response.data
                 });
 
-                _this3.props.setMessage('Success : task deleted');
+                _this4.props.setMessage('Success : task deleted');
               });
             }
           } else {
-            _this3.props.setMessage('Error : failed to delete');
+            _this4.props.setMessage('Error : failed to delete');
           }
         })["catch"](function (error) {
           this.props.setMessage('Error : failed to delete');
@@ -66456,7 +66460,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "updateTodoCompleted",
     value: function updateTodoCompleted(e) {
-      var _this4 = this;
+      var _this5 = this;
 
       var status = e.target.checked;
       var id = e.target.dataset.id;
@@ -66476,15 +66480,15 @@ var Todo = /*#__PURE__*/function (_React$Component) {
         };
         axios(config).then(function (response) {
           if (response.data.success) {
-            if (_this4.props.is_connected) {
-              _this4.getTodos(function (response) {
-                _this4.setState({
+            if (_this5.props.is_connected) {
+              _this5.getTodos(function (response) {
+                _this5.setState({
                   todos: response.data
                 });
               });
             }
           } else {
-            _this4.props.setMessage('Error : update failed');
+            _this5.props.setMessage('Error : update failed');
           }
         })["catch"](function (error) {
           this.props.setMessage('Error : update failed');
@@ -66496,7 +66500,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleUpdateSubmit",
     value: function handleUpdateSubmit(e) {
-      var _this5 = this;
+      var _this6 = this;
 
       e.preventDefault();
       var id = e.target.dataset.id;
@@ -66517,18 +66521,18 @@ var Todo = /*#__PURE__*/function (_React$Component) {
         };
         axios(config).then(function (response) {
           if (response.data.success) {
-            if (_this5.props.is_connected) {
-              _this5.getTodos(function (response) {
-                _this5.setState({
+            if (_this6.props.is_connected) {
+              _this6.getTodos(function (response) {
+                _this6.setState({
                   todos: response.data,
-                  detailEdit: !_this5.state.detailEdit
+                  detailEdit: !_this6.state.detailEdit
                 }); //MicroModal.hide('modal-detail');
                 //this.closeDetail();
 
               });
             }
           } else {
-            _this5.props.setMessage('Error : update failed');
+            _this6.props.setMessage('Error : update failed');
           }
         })["catch"](function (error) {
           this.props.setMessage('Error : update failed');
@@ -66540,7 +66544,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "displayDetail",
     value: function displayDetail(e) {
-      var _this6 = this;
+      var _this7 = this;
 
       var id = e.target.dataset.id;
       var token = localStorage.getItem('token');
@@ -66555,7 +66559,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
         };
         axios(config).then(function (response) {
           if (response.data[0]) {
-            _this6.setState({
+            _this7.setState({
               todoDetailId: response.data[0].id,
               todoDetailName: response.data[0].name,
               todoDetailDetail: response.data[0].detail,
@@ -66564,7 +66568,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
 
             MicroModal.show('modal-detail');
           } else {
-            _this6.props.setMessage('Error : cannot display task detail');
+            _this7.props.setMessage('Error : cannot display task detail');
           }
         })["catch"](function (error) {
           this.props.setMessage('Error : cannot display task detail');
@@ -66576,7 +66580,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "disconnect",
     value: function disconnect(e) {
-      var _this7 = this;
+      var _this8 = this;
 
       var token = localStorage.getItem('token');
       localStorage.removeItem('token');
@@ -66590,7 +66594,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
           }
         };
         axios(config).then(function (response) {
-          _this7.setState({
+          _this8.setState({
             todos: "",
             newTodoName: "",
             newTodoDetail: "",
@@ -66603,9 +66607,9 @@ var Todo = /*#__PURE__*/function (_React$Component) {
             detailUpdateStatus: ""
           });
 
-          _this7.props.checkConnected();
+          _this8.props.checkConnected();
         })["catch"](function (error) {
-          this.props.setMessage("Error : cannot disconnect (it's a bad one)");
+          _this8.props.setMessage("Error : cannot disconnect (it's a bad one)");
         });
       } else {
         this.props.checkConnected();
@@ -66630,11 +66634,11 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (this.props.is_connected) {
         this.getTodos(function () {
-          _this8.setState({
+          _this9.setState({
             todos: response.data
           });
         });
@@ -66643,13 +66647,13 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      var _this9 = this;
+      var _this10 = this;
 
       console.log('updating');
 
       if (this.props.is_connected && this.state.todos === "") {
         this.getTodos(function (response) {
-          _this9.setState({
+          _this10.setState({
             todos: response.data
           });
         });
@@ -66663,7 +66667,7 @@ var Todo = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this10 = this;
+      var _this11 = this;
 
       var todos = this.state.todos;
       var TodosList = [];
@@ -66679,14 +66683,14 @@ var Todo = /*#__PURE__*/function (_React$Component) {
               "data-id": todo.id,
               type: "checkbox",
               defaultChecked: todo.status,
-              onChange: _this10.updateTodoCompleted.bind(_this10)
+              onChange: _this11.updateTodoCompleted.bind(_this11)
             })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
               className: "show-hand",
               "data-id": todo.id,
-              onClick: _this10.displayDetail.bind(_this10)
+              onClick: _this11.displayDetail.bind(_this11)
             }, todo.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
               "data-id": todo.id,
-              onClick: _this10.deleteTodo.bind(_this10)
+              onClick: _this11.deleteTodo.bind(_this11)
             }, "X"))));
           }
         });
@@ -66770,6 +66774,45 @@ var Todo = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (Todo);
+
+/***/ }),
+
+/***/ "./resources/js/helpers/Axios.js":
+/*!***************************************!*\
+  !*** ./resources/js/helpers/Axios.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var AxiosHelper = /*#__PURE__*/function () {
+  function AxiosHelper() {
+    _classCallCheck(this, AxiosHelper);
+  }
+
+  _createClass(AxiosHelper, [{
+    key: "get",
+    value: function get(url, token, data, callSuccess, callFailure) {
+      console.log('GET');
+    }
+  }, {
+    key: "post",
+    value: function post(url, token, data, callSuccess, callFailure) {
+      console.log('POST');
+    }
+  }]);
+
+  return AxiosHelper;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (AxiosHelper);
 
 /***/ }),
 

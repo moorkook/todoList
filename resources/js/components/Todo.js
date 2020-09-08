@@ -34,7 +34,7 @@ class Todo extends React.Component {
             .then((response) => {
                 call(response);
             })
-            .catch(function (error) {
+            .catch((error) => {
                 this.props.setMessage('Error : getTodos has failed');
             });
         } else {
@@ -256,7 +256,7 @@ class Todo extends React.Component {
             })
             this.props.checkConnected();
           })
-          .catch(function (error) {
+          .catch((error) => {
             this.props.setMessage("Error : cannot disconnect (it's a bad one)");
           });
     } else {
